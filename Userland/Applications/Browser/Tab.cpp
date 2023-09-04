@@ -625,6 +625,12 @@ Tab::Tab(BrowserWindow& window)
     m_tab_context_menu->add_action(GUI::Action::create("&Duplicate Tab", g_icon_bag.duplicate_tab, [this](auto&) {
         on_tab_open_request(url());
     }));
+    m_tab_context_menu->add_action(GUI::Action::create("&Edit Tab Name", g_icon_bag.duplicate_tab, [this](auto&) {
+        String title;
+        if (GUI::InputBox::show(&this->window(), title, "Enter a title:"sv, "Change Tab Title"sv) == GUI::InputBox::ExecResult::OK) {
+            on_title_change(title.to_deprecated_string());
+        }
+    }));
     m_tab_context_menu->add_action(GUI::Action::create("Close &Other Tabs", g_icon_bag.close_other_tabs, [this](auto&) {
         on_tab_close_other_request(*this);
     }));
